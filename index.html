@@ -94,9 +94,6 @@
             .eh-tabs { flex-direction: column; }
             .eh-tab-btn { border-bottom: 1px solid rgba(255,255,255,0.1); }
         }
-        
-        /* PDF Sayfa Sonu Yardımcı Sınıfı */
-        .pdf-page-break { page-break-before: always; }
     </style>
 </head>
 <body>
@@ -121,9 +118,9 @@
                 <input type="text" id="eh_tapuBedel" onkeyup="ehFormatCur(this)" placeholder="Örn: 5.000.000">
             </div>
             <div class="eh-row">
-                <div class="eh-col"><div class="eh-form-group"><label>Tapu Harcı (%)</label><input type="number" id="eh_oran_tapu" value="2" step="0.1"></div></div>
-                <div class="eh-col"><div class="eh-form-group"><label>Hizmet Bedeli (%)</label><input type="number" id="eh_oran_hizmet" value="2" step="0.1"></div></div>
-                <div class="eh-col"><div class="eh-form-group"><label>KDV Oranı (%)</label><input type="number" id="eh_oran_kdv" value="20" step="1"></div></div>
+                <div class="eh-col"><div class="eh-form-group"><label>Tapu Harcı (%)</label><input type="number" id="eh_oran_tapu" placeholder="Örn: 2" step="0.1"></div></div>
+                <div class="eh-col"><div class="eh-form-group"><label>Hizmet Bedeli (%)</label><input type="number" id="eh_oran_hizmet" placeholder="Örn: 2" step="0.1"></div></div>
+                <div class="eh-col"><div class="eh-form-group"><label>KDV Oranı (%)</label><input type="number" id="eh_oran_kdv" placeholder="Örn: 20" step="1"></div></div>
             </div>
             <button class="eh-btn eh-btn-primary" onclick="ehCalcTapu()">HESAPLA</button>
             <div class="eh-result-box" id="eh_resTapu" style="display:none;">
@@ -150,12 +147,12 @@
             <h3 style="margin-top:0; color:#2c3e50;">Nakit vs Vadeli Yatırım Analizi</h3>
             <div class="eh-row">
                 <div class="eh-col">
-                    <div class="eh-form-group"><label>Liste Fiyatı</label><input type="text" id="eh_k_liste" onkeyup="ehFormatCur(this)" value="11.205.000"></div>
-                    <div class="eh-form-group"><label>Peşinat Tutarı</label><input type="text" id="eh_k_pesinat" onkeyup="ehFormatCur(this)" value="5.602.500"></div>
+                    <div class="eh-form-group"><label>Liste Fiyatı</label><input type="text" id="eh_k_liste" onkeyup="ehFormatCur(this)" placeholder="Örn: 11.205.000"></div>
+                    <div class="eh-form-group"><label>Peşinat Tutarı</label><input type="text" id="eh_k_pesinat" onkeyup="ehFormatCur(this)" placeholder="Örn: 5.602.500"></div>
                 </div>
                 <div class="eh-col">
-                    <div class="eh-form-group"><label>Mevduat Faizi (Yıllık %)</label><input type="number" id="eh_k_mevduat" value="45" step="0.5"></div>
-                    <div class="eh-form-group"><label>Peşin İndirimi (%)</label><input type="number" id="eh_k_indirim" value="10" step="0.1"></div>
+                    <div class="eh-form-group"><label>Mevduat Faizi (Yıllık %)</label><input type="number" id="eh_k_mevduat" placeholder="Örn: 45" step="0.5"></div>
+                    <div class="eh-form-group"><label>Peşin İndirimi (%)</label><input type="number" id="eh_k_indirim" placeholder="Örn: 10" step="0.1"></div>
                 </div>
             </div>
             <hr style="border:0; border-top:1px solid #ddd; margin:15px 0;">
@@ -165,14 +162,14 @@
             </div>
             <div id="eh_plan_sabit">
                 <div class="eh-row">
-                    <div class="eh-col"><div class="eh-form-group"><label>Vade (Ay)</label><input type="number" id="eh_k_vade" value="15"></div></div>
-                    <div class="eh-col"><div class="eh-form-group"><label>Aylık Faiz (%)</label><input type="number" id="eh_k_krediFaiz" value="0" step="0.01"></div></div>
+                    <div class="eh-col"><div class="eh-form-group"><label>Vade (Ay)</label><input type="number" id="eh_k_vade" placeholder="Örn: 15"></div></div>
+                    <div class="eh-col"><div class="eh-form-group"><label>Aylık Faiz (%)</label><input type="number" id="eh_k_krediFaiz" placeholder="Örn: 0" step="0.01"></div></div>
                 </div>
             </div>
             <div id="eh_plan_esnek" style="display:none; background:#fafafa; padding:15px; border:1px solid #eee; border-radius:6px;">
                 <label style="display:block; font-weight:bold; margin-bottom:10px;">Taksit Akışı</label>
                 <div id="eh_esnek_container"></div>
-                <button class="eh-btn eh-btn-outline" onclick="ehAddRow(12, '100.000')">+ Ödeme Dönemi Ekle</button>
+                <button class="eh-btn eh-btn-outline" onclick="ehAddRow('', '')">+ Ödeme Dönemi Ekle</button>
             </div>
             <button class="eh-btn eh-btn-primary" onclick="ehCalcKarar()">ANALİZ ET VE KARŞILAŞTIR</button>
             <div class="eh-result-box" id="eh_resKarar" style="display:none;">
@@ -190,8 +187,8 @@
         <div id="tab-amortisman" class="eh-content">
             <h3 style="margin-top:0; color:#2c3e50;">Yatırım Geri Dönüşü (Amortisman)</h3>
             <div class="eh-row">
-                <div class="eh-col"><div class="eh-form-group"><label>Satış Fiyatı</label><input type="text" id="eh_a_fiyat" onkeyup="ehFormatCur(this)"></div></div>
-                <div class="eh-col"><div class="eh-form-group"><label>Aylık Kira</label><input type="text" id="eh_a_kira" onkeyup="ehFormatCur(this)"></div></div>
+                <div class="eh-col"><div class="eh-form-group"><label>Satış Fiyatı</label><input type="text" id="eh_a_fiyat" onkeyup="ehFormatCur(this)" placeholder="Örn: 3.500.000"></div></div>
+                <div class="eh-col"><div class="eh-form-group"><label>Aylık Kira</label><input type="text" id="eh_a_kira" onkeyup="ehFormatCur(this)" placeholder="Örn: 25.000"></div></div>
             </div>
             <button class="eh-btn eh-btn-primary" onclick="ehCalcAmortisman()">HESAPLA</button>
             <div class="eh-result-box" id="eh_resAmort" style="display:none; text-align:center;">
@@ -233,7 +230,7 @@
 
     function ehAddRow(ay, tutar) {
         let div = document.createElement('div'); div.className = 'eh-inst-row';
-        div.innerHTML = `<input type="number" class="eh-esnek-ay" value="${ay}" style="width:80px;"><input type="text" class="eh-esnek-tutar" value="${tutar}" onkeyup="ehFormatCur(this)" style="flex:1;"><button class="eh-btn-del" onclick="this.parentElement.remove()">X</button>`;
+        div.innerHTML = `<input type="number" class="eh-esnek-ay" value="${ay}" placeholder="Ay" style="width:80px;"><input type="text" class="eh-esnek-tutar" value="${tutar}" placeholder="Örn: 100.000" onkeyup="ehFormatCur(this)" style="flex:1;"><button class="eh-btn-del" onclick="this.parentElement.remove()">X</button>`;
         document.getElementById('eh_esnek_container').appendChild(div);
     }
 
@@ -277,16 +274,17 @@
         document.getElementById('eh_resAmort').style.display='block';
     }
 
-    window.onload = function() { ehAddRow(15, '100.000'); };
+    // Uygulama açılışında örnek amaçlı boş satır eklenir
+    window.onload = function() { ehAddRow('', ''); };
 
     // --- PDF MODÜLÜ ---
     function ehGeneratePDF() {
         const isS = document.querySelector('input[name="eh_plan_tipi"]:checked').value === 'sabit';
-        const listP = document.getElementById('eh_k_liste').value, pesinT = document.getElementById('eh_k_pesinat').value, mev = document.getElementById('eh_k_mevduat').value, ind = document.getElementById('eh_k_indirim').value, pFiyat = document.getElementById('eh_r_pesin').innerText, npvVal = document.getElementById('eh_r_npv').innerText, advT = document.getElementById('eh_r_adv_box').innerText, verdH = document.getElementById('eh_r_kararKutusu').innerHTML;
+        const listP = document.getElementById('eh_k_liste').value || '0', pesinT = document.getElementById('eh_k_pesinat').value || '0', mev = document.getElementById('eh_k_mevduat').value || '0', ind = document.getElementById('eh_k_indirim').value || '0';
+        const pFiyat = document.getElementById('eh_r_pesin').innerText, npvVal = document.getElementById('eh_r_npv').innerText, advT = document.getElementById('eh_r_adv_box').innerText, verdH = document.getElementById('eh_r_kararKutusu').innerHTML;
         const monthlyRate = (parseFloat(mev)||0)/1200;
         
-        // Nakit Akış Hesaplama Algoritması
-        let initialCash = ehGetNum('eh_k_liste') * (1 - (parseFloat(ind)/100)) - ehGetNum('eh_k_pesinat');
+        let initialCash = ehGetNum('eh_k_liste') * (1 - ((parseFloat(ind)||0)/100)) - ehGetNum('eh_k_pesinat');
         let currentKasa = initialCash, cashFlowData = [], totalMonths = 0;
         let monthlyPayments = [];
 
@@ -306,79 +304,69 @@
             if(ball > 0) { totalMonths++; monthlyPayments[totalMonths] = ball; }
         }
 
-        // Simülasyonu Çalıştır
         for(let m=1; m<=totalMonths; m++){
             let faiz = currentKasa * monthlyRate;
             let taksit = monthlyPayments[m] || 0;
             let sonKasa = currentKasa + faiz - taksit;
             let durum = sonKasa > currentKasa ? "Para Büyüyor 📈" : (sonKasa > 0 ? "Dengede ⚖️" : "Cepten Yiyor 📉");
-            if(m === totalMonths && taksit > 100000) durum = "Final Ödemesi ✅";
+            if(m === totalMonths && taksit > (ehGetNum('eh_k_liste') * 0.1)) durum = "Final Ödemesi ✅";
             
             cashFlowData.push({ m, bas: currentKasa, faiz, taks: taksit, son: sonKasa, dur: durum });
             currentKasa = sonKasa;
         }
 
-        // Akıllı Satır Filtreleme (Smart Hiding)
-        let visibleRows = cashFlowData.filter((d, idx) => {
-            if(d.m <= 3) return true; // İlk 3 ay
-            if(d.m === totalMonths) return true; // Son ay
-            if(d.m % 12 === 0) return true; // Yıl sonları
-            // Taksit değişimi kontrolü
-            if(idx > 0 && cashFlowData[idx].taks !== cashFlowData[idx-1].taks) return true;
-            if(idx < cashFlowData.length-1 && cashFlowData[idx].taks !== cashFlowData[idx+1].taks) return true;
-            return false;
-        });
-
-        // Tablo HTML Oluşturma
+        // AKILLI FİLTRELEME İPTAL - Bütün Satırlar Gösterilir
         let tableHtml = `<table style="width:100%; border-collapse: collapse; font-size:12px; margin-top:10px;">
-            <tr style="background:#2c3e50; color:white;">
-                <th style="padding:8px; border:1px solid #ddd;">Ay</th>
-                <th style="padding:8px; border:1px solid #ddd;">Kasa (Dönem Başı)</th>
-                <th style="padding:8px; border:1px solid #ddd;">Faiz Getirisi</th>
-                <th style="padding:8px; border:1px solid #ddd;">Taksit Ödemesi</th>
-                <th style="padding:8px; border:1px solid #ddd;">Kasa (Dönem Sonu)</th>
-                <th style="padding:8px; border:1px solid #ddd;">Durum Analizi</th>
-            </tr>`;
+            <thead>
+                <tr style="background:#2c3e50; color:white;">
+                    <th style="padding:8px; border:1px solid #ddd;">Ay</th>
+                    <th style="padding:8px; border:1px solid #ddd;">Kasa (Başı)</th>
+                    <th style="padding:8px; border:1px solid #ddd;">Faiz Getirisi</th>
+                    <th style="padding:8px; border:1px solid #ddd;">Taksit</th>
+                    <th style="padding:8px; border:1px solid #ddd;">Kasa (Sonu)</th>
+                    <th style="padding:8px; border:1px solid #ddd;">Durum</th>
+                </tr>
+            </thead>
+            <tbody>`;
         
-        let lastM = 0;
-        visibleRows.forEach(d => {
-            if(d.m > lastM + 1) {
-                tableHtml += `<tr style="background:#f9f9f9;"><td colspan="6" style="text-align:center; padding:4px; color:#999;">................ (Ara aylar benzer seyretmektedir) ................</td></tr>`;
-            }
-            tableHtml += `<tr>
-                <td style="padding:8px; border:1px solid #ddd; text-align:center;">${d.m}. Ay</td>
-                <td style="padding:8px; border:1px solid #ddd;">${ehFormatter.format(d.bas)}</td>
-                <td style="padding:8px; border:1px solid #ddd; color:green;">+ ${ehFormatter.format(d.faiz)}</td>
-                <td style="padding:8px; border:1px solid #ddd; color:red;">- ${ehFormatter.format(d.taks)}</td>
-                <td style="padding:8px; border:1px solid #ddd; font-weight:bold;">${ehFormatter.format(d.son)}</td>
-                <td style="padding:8px; border:1px solid #ddd; font-style:italic;">${d.dur}</td>
+        cashFlowData.forEach(d => {
+            tableHtml += `<tr style="page-break-inside: avoid;">
+                <td style="padding:6px 8px; border:1px solid #ddd; text-align:center;">${d.m}. Ay</td>
+                <td style="padding:6px 8px; border:1px solid #ddd;">${ehFormatter.format(d.bas)}</td>
+                <td style="padding:6px 8px; border:1px solid #ddd; color:green;">+ ${ehFormatter.format(d.faiz)}</td>
+                <td style="padding:6px 8px; border:1px solid #ddd; color:red;">- ${ehFormatter.format(d.taks)}</td>
+                <td style="padding:6px 8px; border:1px solid #ddd; font-weight:bold;">${ehFormatter.format(d.son)}</td>
+                <td style="padding:6px 8px; border:1px solid #ddd; font-style:italic;">${d.dur}</td>
             </tr>`;
-            lastM = d.m;
         });
-        tableHtml += `</table>`;
+        tableHtml += `</tbody></table>`;
 
-        // PDF Şablon İnşası
+        // PDF Şablonu (Genişliği sabit tutuldu)
         const report = document.createElement('div');
+        report.style.width = '800px'; 
+        report.style.padding = '20px';
+        report.style.boxSizing = 'border-box';
         report.innerHTML = `
-            <div style="font-family:sans-serif; padding:30px; color:#333;">
+            <div style="font-family: Arial, sans-serif; color:#333;">
+                
                 <div style="text-align:center; border-bottom:2px solid #e67e22; padding-bottom:10px; margin-bottom:20px;">
-                    <h1 style="margin:0; color:#2c3e50;">Emlak Yatırım Karar Raporu</h1>
-                    <p style="margin:5px; color:#7f8c8d;">Finansal Karşılaştırma ve Strateji Belgesi</p>
+                    <h1 style="margin:0; color:#2c3e50; font-size: 24px;">Emlak Yatırım Karar Raporu</h1>
+                    <p style="margin:5px; color:#7f8c8d; font-size: 14px;">Finansal Karşılaştırma ve Strateji Belgesi</p>
                 </div>
 
                 <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
                     <div style="width:45%;">
-                        <h3 style="color:#2980b9; border-bottom:1px solid #eee;">1. Yatırım Girdileri</h3>
-                        <p style="font-size:14px;"><strong>Liste Fiyatı:</strong> ${listP} ₺<br><strong>Peşinat:</strong> ${pesinT} ₺<br><strong>Yıllık Faiz:</strong> %${mev}<br><strong>İndirim:</strong> %${ind}</p>
+                        <h3 style="color:#2980b9; border-bottom:1px solid #eee; font-size: 16px;">1. Yatırım Girdileri</h3>
+                        <p style="font-size:14px; line-height:1.6;"><strong>Liste Fiyatı:</strong> ${listP} ₺<br><strong>Peşinat:</strong> ${pesinT} ₺<br><strong>Yıllık Faiz:</strong> %${mev}<br><strong>İndirim:</strong> %${ind}</p>
                     </div>
                     <div style="width:45%; background:#fcfcfc; padding:10px; border:1px solid #eee; border-radius:5px;">
-                        <h3 style="color:#2980b9; border-bottom:1px solid #eee; margin-top:0;">2. Ödeme Planı</h3>
-                        <p style="font-size:14px;"><strong>Plan:</strong> ${isS?'Sabit':'Esnek'}<br><strong>Vade:</strong> ${totalMonths} Ay</p>
+                        <h3 style="color:#2980b9; border-bottom:1px solid #eee; margin-top:0; font-size: 16px;">2. Ödeme Planı</h3>
+                        <p style="font-size:14px; line-height:1.6;"><strong>Plan:</strong> ${isS?'Sabit':'Esnek'}<br><strong>Vade:</strong> ${totalMonths} Ay</p>
                     </div>
                 </div>
 
-                <h3 style="color:#2980b9; border-bottom:1px solid #eee;">3. Finansal Karşılaştırma</h3>
-                <table style="width:100%; border-collapse:collapse; margin-bottom:20px;">
+                <h3 style="color:#2980b9; border-bottom:1px solid #eee; font-size: 16px;">3. Finansal Karşılaştırma</h3>
+                <table style="width:100%; border-collapse:collapse; margin-bottom:20px; font-size: 14px;">
                     <tr style="background:#fef9e7;">
                         <td style="padding:12px; border:1px solid #ddd;"><strong>Peşin Alım Senaryosu (Net Ödeme)</strong></td>
                         <td style="padding:12px; border:1px solid #ddd; text-align:right; font-weight:bold; color:#d35400;">${pFiyat}</td>
@@ -390,31 +378,34 @@
                 </table>
 
                 <div style="text-align:center; padding:15px; border:2px dashed #ddd; margin-bottom:20px;">
-                    <span style="font-size:14px; color:#7f8c8d;">KARŞILAŞTIRMALI NET KAZANÇ / AVANTAJ</span><br>
-                    <span style="font-size:24px; font-weight:bold; color:#27ae60;">${advT.split('\n')[1] || advT}</span>
+                    <span style="font-size:12px; color:#7f8c8d;">KARŞILAŞTIRMALI NET KAZANÇ / AVANTAJ</span><br>
+                    <span style="font-size:22px; font-weight:bold; color:#27ae60;">${advT.split('\n')[1] || advT}</span>
                 </div>
 
                 <div style="padding:15px; border-left:5px solid #2c3e50; background:#f4f6f7; margin-bottom:20px;">
                     ${verdH}
                 </div>
 
-                <div class="pdf-page-break"></div>
-                <h3 style="color:#2c3e50; border-bottom:2px solid #e67e22; padding-bottom:5px;">4. Detaylı Nakit Akış & Kasa Projeksiyonu</h3>
-                <p style="font-size:12px; color:#666;">*Bu tablo, peşin ödeme yerine vadeli alım yapıp kalan paranızı mevduatta değerlendirdiğiniz varsayımıyla hazırlanmıştır.</p>
+                <div style="page-break-before: always; margin-top: 40px;"></div>
+                
+                <h3 style="color:#2c3e50; border-bottom:2px solid #e67e22; padding-bottom:5px; margin-top:20px; font-size: 16px;">4. Detaylı Nakit Akış & Kasa Projeksiyonu</h3>
+                <p style="font-size:11px; color:#666;">*Bu tablo, peşin ödeme yerine vadeli alım yapıp kalan paranızı mevduatta değerlendirdiğiniz varsayımıyla hazırlanmıştır.</p>
                 ${tableHtml}
 
-                <div style="margin-top:30px; font-size:11px; color:#7f8c8d; text-align:justify; border-top:1px solid #eee; padding-top:10px;">
+                <div style="margin-top:20px; font-size:10px; color:#7f8c8d; text-align:justify; border-top:1px solid #eee; padding-top:10px;">
                     <strong>Analiz Notu:</strong> Hesaplamalar "Paranın Zaman Değeri" (NPV) prensibine göredir. Vadeli ödemede cebinizde kalan paranın her ay faiz getirisi sağladığı ve taksitlerin bu havuzdan ödendiği simüle edilmiştir. Projeksiyon, mevduat faiz oranının vade süresince sabit kalacağı varsayımıyla statik bir model sunar.
                 </div>
             </div>
         `;
 
+        // PDF AYARLARI (Genişlik Kilitlendi)
         const opt = {
-            margin: 0.2,
+            margin: [10, 0, 10, 0], // Üst, Sol, Alt, Sağ marjlar
             filename: 'Gayrimenkul_Strateji_Raporu.pdf',
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            html2canvas: { scale: 2, windowWidth: 800 }, // 800px zorlamasıyla mobil ekranda bozulma önlenir
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: 'css' } // CSS'deki page-break-before kurallarını tanır
         };
 
         html2pdf().set(opt).from(report).save();
