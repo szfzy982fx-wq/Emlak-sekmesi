@@ -315,37 +315,38 @@
             currentKasa = sonKasa;
         }
 
-        // AKILLI FİLTRELEME İPTAL - Bütün Satırlar Gösterilir
-        let tableHtml = `<table style="width:100%; border-collapse: collapse; font-size:12px; margin-top:10px;">
+        // Tıklım tıklım dolu tablo HTML'si (Fixed Table Layout eklendi)
+        let tableHtml = `<table style="width:100%; table-layout: fixed; border-collapse: collapse; font-size:12px; margin-top:10px;">
             <thead>
                 <tr style="background:#2c3e50; color:white;">
-                    <th style="padding:8px; border:1px solid #ddd;">Ay</th>
-                    <th style="padding:8px; border:1px solid #ddd;">Kasa (Başı)</th>
-                    <th style="padding:8px; border:1px solid #ddd;">Faiz Getirisi</th>
-                    <th style="padding:8px; border:1px solid #ddd;">Taksit</th>
-                    <th style="padding:8px; border:1px solid #ddd;">Kasa (Sonu)</th>
-                    <th style="padding:8px; border:1px solid #ddd;">Durum</th>
+                    <th style="padding:8px; border:1px solid #ddd; width:10%;">Ay</th>
+                    <th style="padding:8px; border:1px solid #ddd; width:18%;">Kasa (Başı)</th>
+                    <th style="padding:8px; border:1px solid #ddd; width:18%;">Faiz Getirisi</th>
+                    <th style="padding:8px; border:1px solid #ddd; width:18%;">Taksit</th>
+                    <th style="padding:8px; border:1px solid #ddd; width:18%;">Kasa (Sonu)</th>
+                    <th style="padding:8px; border:1px solid #ddd; width:18%;">Durum</th>
                 </tr>
             </thead>
             <tbody>`;
         
         cashFlowData.forEach(d => {
             tableHtml += `<tr style="page-break-inside: avoid;">
-                <td style="padding:6px 8px; border:1px solid #ddd; text-align:center;">${d.m}. Ay</td>
-                <td style="padding:6px 8px; border:1px solid #ddd;">${ehFormatter.format(d.bas)}</td>
-                <td style="padding:6px 8px; border:1px solid #ddd; color:green;">+ ${ehFormatter.format(d.faiz)}</td>
-                <td style="padding:6px 8px; border:1px solid #ddd; color:red;">- ${ehFormatter.format(d.taks)}</td>
-                <td style="padding:6px 8px; border:1px solid #ddd; font-weight:bold;">${ehFormatter.format(d.son)}</td>
-                <td style="padding:6px 8px; border:1px solid #ddd; font-style:italic;">${d.dur}</td>
+                <td style="padding:6px; border:1px solid #ddd; text-align:center;">${d.m}. Ay</td>
+                <td style="padding:6px; border:1px solid #ddd;">${ehFormatter.format(d.bas)}</td>
+                <td style="padding:6px; border:1px solid #ddd; color:green;">+ ${ehFormatter.format(d.faiz)}</td>
+                <td style="padding:6px; border:1px solid #ddd; color:red;">- ${ehFormatter.format(d.taks)}</td>
+                <td style="padding:6px; border:1px solid #ddd; font-weight:bold;">${ehFormatter.format(d.son)}</td>
+                <td style="padding:6px; border:1px solid #ddd; font-style:italic;">${d.dur}</td>
             </tr>`;
         });
         tableHtml += `</tbody></table>`;
 
-        // PDF Şablonu (Genişliği sabit tutuldu)
+        // PDF Şablonu: 794px Genişliğe Sabitlendi (A4 Pikselliği)
         const report = document.createElement('div');
-        report.style.width = '800px'; 
+        report.style.width = '794px'; 
         report.style.padding = '20px';
         report.style.boxSizing = 'border-box';
+        report.style.background = '#ffffff';
         report.innerHTML = `
             <div style="font-family: Arial, sans-serif; color:#333;">
                 
@@ -366,7 +367,7 @@
                 </div>
 
                 <h3 style="color:#2980b9; border-bottom:1px solid #eee; font-size: 16px;">3. Finansal Karşılaştırma</h3>
-                <table style="width:100%; border-collapse:collapse; margin-bottom:20px; font-size: 14px;">
+                <table style="width:100%; table-layout: fixed; border-collapse:collapse; margin-bottom:20px; font-size: 14px;">
                     <tr style="background:#fef9e7;">
                         <td style="padding:12px; border:1px solid #ddd;"><strong>Peşin Alım Senaryosu (Net Ödeme)</strong></td>
                         <td style="padding:12px; border:1px solid #ddd; text-align:right; font-weight:bold; color:#d35400;">${pFiyat}</td>
@@ -398,14 +399,14 @@
             </div>
         `;
 
-        // PDF AYARLARI (Genişlik Kilitlendi)
+        // PDF AYARLARI: 10mm Tam Marj ve Kalibrasyon
         const opt = {
-            margin: [10, 0, 10, 0], // Üst, Sol, Alt, Sağ marjlar
+            margin: 10, // Dört bir yandan eşit 10mm A4 boşluğu
             filename: 'Gayrimenkul_Strateji_Raporu.pdf',
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, windowWidth: 800 }, // 800px zorlamasıyla mobil ekranda bozulma önlenir
+            html2canvas: { scale: 2, useCORS: true }, // windowWidth kaldırıldı, bazen kaymaya sebep olabiliyor
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-            pagebreak: { mode: 'css' } // CSS'deki page-break-before kurallarını tanır
+            pagebreak: { mode: 'css' }
         };
 
         html2pdf().set(opt).from(report).save();
