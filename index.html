@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -40,27 +39,16 @@
         .eh-form-group input { width: 100%; padding: 12px; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 1.1rem; font-family: monospace; font-weight: 700; box-sizing: border-box; transition: 0.2s; }
         .eh-form-group input:focus { border-color: var(--accent); outline: none; background: #fff; }
 
-        /* Akıllı Peşinat Kutusu */
+        /* Akıllı Peşinat Kutusu CSS Entegrasyonu */
         .eh-input-wrapper { position: relative; display: flex; align-items: center; }
-        .eh-input-wrapper > input { padding-right: 100px; } 
-        .eh-perc-box { position: absolute; right: 6px; background: #edf2f7; border: 2px solid #e2e8f0; border-radius: 6px; display: flex; align-items: center; padding: 2px 6px; width: 90px; height: calc(100% - 12px); box-sizing: border-box; transition: 0.2s; }
+        .eh-input-wrapper > input { padding-right: 80px; }
+        .eh-perc-box { position: absolute; right: 6px; background: #edf2f7; border: 2px solid #e2e8f0; border-radius: 6px; display: flex; align-items: center; padding: 2px 6px; width: 70px; height: calc(100% - 12px); box-sizing: border-box; transition: 0.2s; }
         .eh-perc-box:focus-within { border-color: var(--accent); background: #fff; }
         .eh-perc-box span { font-weight: 900; color: var(--gray); font-size: 0.9rem; margin-right: 3px; }
         .eh-perc-box input { border: none !important; background: transparent !important; padding: 0 !important; font-size: 1rem !important; font-weight: 800 !important; color: var(--primary) !important; width: 100% !important; text-align: center; }
         .eh-perc-box input:focus { outline: none !important; box-shadow: none !important; }
-
-        /* Şalter (Segmented Control) */
-        .eh-segment-box { display: flex; background: #e2e8f0; border-radius: 8px; padding: 4px; margin-bottom: 20px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
-        .eh-seg-btn { flex: 1; border: none; background: transparent; padding: 12px; font-weight: 800; font-size: 0.85rem; color: #718096; border-radius: 6px; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); text-transform: uppercase; }
-        .eh-seg-btn.active { background: var(--primary); color: var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.15); transform: scale(1.01); }
-
-        /* Bakiye Çubuğu */
-        .eh-bakiye-bar { margin-top: 15px; padding: 12px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; font-weight: 700; transition: all 0.3s ease; border-left: 5px solid; }
-        .eh-bakiye-bar span { font-size: 1.05rem; font-weight: 900; }
-        .eh-bakiye-bar.gri { background: #f1f5f9; color: #64748b; border-color: #cbd5e0; }
-        .eh-bakiye-bar.turuncu { background: #fffaf0; color: #c05621; border-color: #ed8936; }
-        .eh-bakiye-bar.yesil { background: #f0fff4; color: #276749; border-color: #48bb78; }
-        .eh-bakiye-bar.kirmizi { background: #fff5f5; color: #c53030; border-color: #f56565; }
+        .eh-perc-box input[type="number"]::-webkit-inner-spin-button, .eh-perc-box input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        .eh-perc-box input[type="number"] { -moz-appearance: textfield; }
 
         .eh-toggle-row { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; font-weight: 700; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 10px; cursor: pointer; transition: 0.2s; }
         .eh-toggle-row:hover { background: #edf2f7; }
@@ -170,7 +158,7 @@
                             <input type="text" id="eh_k_pesinat" oninput="ehFormatCur(this); ehUpdatePerc()" placeholder="5.602.500">
                             <div class="eh-perc-box" title="Hızlı Yüzde Hesaplama">
                                 <span>%</span>
-                                <input type="number" id="eh_k_pesinat_oran" list="eh_oranlar" oninput="ehUpdatePesinat()" placeholder="0">
+                                <input type="number" id="eh_k_pesinat_oran" list="eh_oranlar" oninput="ehUpdatePesinat()" placeholder="50">
                                 <datalist id="eh_oranlar">
                                     <option value="10"></option><option value="20"></option><option value="25"></option>
                                     <option value="30"></option><option value="40"></option><option value="50"></option>
@@ -188,12 +176,9 @@
                 <div class="eh-col"><div class="eh-form-group"><label>Peşin İndirimi (%)</label><input type="number" id="eh_k_indirim" placeholder="10"></div></div>
             </div>
 
-            <input type="radio" name="eh_plan_tipi" value="sabit" id="eh_radio_sabit" checked style="display:none;" onchange="ehTogglePlan()">
-            <input type="radio" name="eh_plan_tipi" value="esnek" id="eh_radio_esnek" style="display:none;" onchange="ehTogglePlan()">
-            
-            <div class="eh-segment-box">
-                <button class="eh-seg-btn active" onclick="document.getElementById('eh_radio_sabit').click(); document.querySelectorAll('.eh-seg-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active');">SABİT TAKSİT</button>
-                <button class="eh-seg-btn" onclick="document.getElementById('eh_radio_esnek').click(); document.querySelectorAll('.eh-seg-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active');">ESNEK / ARA ÖDEMELİ</button>
+            <div style="display:flex; gap:15px; margin-bottom:20px; font-weight:800; font-size:12px;">
+                <label><input type="radio" name="eh_plan_tipi" value="sabit" checked onchange="ehTogglePlan()"> SABİT TAKSİT</label>
+                <label><input type="radio" name="eh_plan_tipi" value="esnek" onchange="ehTogglePlan()"> ESNEK / ARA ÖDEMELİ</label>
             </div>
 
             <div id="eh_plan_sabit">
@@ -204,11 +189,7 @@
             </div>
             <div id="eh_plan_esnek" style="display:none; background:#f7fafc; padding:15px; border-radius:10px; border:1px solid #edf2f7; margin-bottom:15px;">
                 <div id="eh_esnek_container"></div>
-                <button class="eh-btn eh-btn-outline" style="width:auto; padding:8px 15px; font-size:11px; border: 1px solid #cbd5e0; background: #fff; color: var(--primary);" onclick="ehAddRow('', '')"><i class="fa-solid fa-plus"></i> ÖDEME DÖNEMİ EKLE</button>
-                
-                <div id="eh_bakiye_bar" class="eh-bakiye-bar gri">
-                    <span>Kapanış / Balon Ödemesi:</span> <span id="eh_bakiye_val">0 ₺</span>
-                </div>
+                <button class="eh-btn eh-btn-outline" style="width:auto; padding:8px 12px; font-size:11px;" onclick="ehAddRow('', '')"><i class="fa-solid fa-plus"></i> ÖDEME DÖNEMİ EKLE</button>
             </div>
 
             <button class="eh-btn eh-btn-primary" onclick="ehCalcKarar()"><i class="fa-solid fa-chart-simple"></i> YATIRIM ANALİZİ YAP</button>
@@ -269,10 +250,9 @@
     function ehFormatCur(el) { let val = el.value.replace(/\D/g, ""); if(!val) { el.value = ""; return; } el.value = val.replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
     function ehGetNum(id) { let val = document.getElementById(id).value; return parseFloat(val.replace(/\./g, '')) || 0; }
     function ehOpenTab(evt, tabId) { document.querySelectorAll('.eh-content').forEach(el => el.classList.remove('active')); document.querySelectorAll('.eh-tab-btn').forEach(el => el.classList.remove('active')); document.getElementById(tabId).classList.add('active'); evt.currentTarget.classList.add('active'); }
-    function ehTogglePlan() { let isS = document.getElementById('eh_radio_sabit').checked; document.getElementById('eh_plan_sabit').style.display = isS ? 'block' : 'none'; document.getElementById('eh_plan_esnek').style.display = isS ? 'none' : 'block'; }
+    function ehTogglePlan() { let isS = document.querySelector('input[name="eh_plan_tipi"]:checked').value === 'sabit'; document.getElementById('eh_plan_sabit').style.display = isS ? 'block' : 'none'; document.getElementById('eh_plan_esnek').style.display = isS ? 'none' : 'block'; }
     function ehToggleCheck(id) { const c = document.getElementById(id); if(event.target.tagName !== 'INPUT') { c.checked = !c.checked; } if(id === 'eh_t_alici_all' || id === 'eh_t_kdv_on') ehCalcTapu(); }
-    
-    function ehAddRow(ay, tutar) { let div = document.createElement('div'); div.className = 'eh-inst-row'; div.style = "display:flex; gap:10px; margin-bottom:10px;"; div.innerHTML = `<input type="number" class="eh-esnek-ay" placeholder="Ay" style="width:60px; padding:8px; border: 1px solid #e2e8f0; border-radius:6px; outline:none;"><input type="text" class="eh-esnek-tutar" placeholder="Tutar" oninput="ehFormatCur(this); ehUpdateBakiye()" style="flex:1; padding:8px; border: 1px solid #e2e8f0; border-radius:6px; font-weight:700; outline:none;"><button style="background:#fee2e2; border:none; padding:10px; border-radius:6px; cursor:pointer;" onclick="this.parentElement.remove(); ehUpdateBakiye();"><i class="fa-solid fa-trash-can" style="color:red;"></i></button>`; document.getElementById('eh_esnek_container').appendChild(div); ehUpdateBakiye(); }
+    function ehAddRow(ay, tutar) { let div = document.createElement('div'); div.className = 'eh-inst-row'; div.style = "display:flex; gap:10px; margin-bottom:10px;"; div.innerHTML = `<input type="number" class="eh-esnek-ay" placeholder="Ay" style="width:60px; padding:8px;"><input type="text" class="eh-esnek-tutar" placeholder="Tutar" onkeyup="ehFormatCur(this)" style="flex:1; padding:8px;"><button style="background:#fee2e2; border:none; padding:10px; border-radius:6px; cursor:pointer;" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash-can" style="color:red;"></i></button>`; document.getElementById('eh_esnek_container').appendChild(div); }
 
     function ehSaveRates(type) {
         let d = {};
@@ -287,47 +267,34 @@
     function ehClear(tabId) { 
         document.getElementById(tabId).querySelectorAll('input:not([type="radio"]):not([type="checkbox"]):not([id^="eh_t_"]):not([id^="eh_s_"])').forEach(i => i.value = ""); 
         document.getElementById(tabId).querySelector('.eh-result-box').style.display = "none";
-        if(tabId === 'tab-karar') { document.getElementById('eh_esnek_container').innerHTML = ""; document.getElementById('eh_k_pesinat_oran').value = ""; ehUpdateBakiye(); }
+        if(tabId === 'tab-karar') { document.getElementById('eh_esnek_container').innerHTML = ""; document.getElementById('eh_k_pesinat_oran').value = ""; }
     }
 
-    function ehUpdateBakiye() {
-        let liste = ehGetNum('eh_k_liste') || 0;
-        let pesinat = ehGetNum('eh_k_pesinat') || 0;
-        let esnekToplam = 0;
-        document.querySelectorAll('.eh-inst-row').forEach(r => { esnekToplam += (parseFloat(r.querySelector('.eh-esnek-tutar').value.replace(/\./g,'')) || 0); });
-        let bakiye = liste - pesinat - esnekToplam;
-        let bar = document.getElementById('eh_bakiye_bar');
-        if(!bar) return;
-        if(liste === 0 && pesinat === 0 && esnekToplam === 0) { bar.className = 'eh-bakiye-bar gri'; bar.innerHTML = `<span>Kapanış / Balon Ödemesi:</span> <span>0 ₺</span>`; }
-        else if(bakiye > 0) { bar.className = 'eh-bakiye-bar turuncu'; bar.innerHTML = `<span>Kapanış / Balon Ödemesi:</span> <span>${ehFormatter.format(bakiye)}</span>`; }
-        else if(bakiye === 0) { bar.className = 'eh-bakiye-bar yesil'; bar.innerHTML = `<span>Ödeme Planı Tamamlandı</span> <span>(Bakiye: 0 ₺)</span>`; }
-        else { bar.className = 'eh-bakiye-bar kirmizi'; bar.innerHTML = `<span>Uyarı: Liste Fiyatı Aşıldı!</span> <span>Fazla: ${ehFormatter.format(Math.abs(bakiye))}</span>`; }
-    }
-
+    // Akıllı Peşinat Fonksiyonları
     function ehUpdatePerc() {
         let liste = ehGetNum('eh_k_liste');
-        let pInput = document.getElementById('eh_k_pesinat');
+        let pesinat = ehGetNum('eh_k_pesinat');
         let oranInput = document.getElementById('eh_k_pesinat_oran');
-        if(!liste) { ehUpdateBakiye(); return; }
-        if(pInput.value === "") { oranInput.value = ""; } 
-        else {
-            let pesinat = ehGetNum('eh_k_pesinat');
-            if(pesinat >= 0) { let oran = (pesinat / liste) * 100; oranInput.value = oran > 100 ? 100 : (Number.isInteger(oran) ? oran : oran.toFixed(1)); }
+        if(!liste) return; 
+        if(pesinat >= 0) {
+            let oran = (pesinat / liste) * 100;
+            oranInput.value = oran > 100 ? 100 : (Number.isInteger(oran) ? oran : oran.toFixed(1));
+        } else {
+            oranInput.value = "";
         }
-        ehUpdateBakiye();
     }
 
     function ehUpdatePesinat() {
         let liste = ehGetNum('eh_k_liste');
-        let oranInput = document.getElementById('eh_k_pesinat_oran');
+        let oranStr = document.getElementById('eh_k_pesinat_oran').value;
         let pesinatInput = document.getElementById('eh_k_pesinat');
-        if(!liste) { ehUpdateBakiye(); return; }
-        if(oranInput.value === "") { pesinatInput.value = ""; } 
-        else {
-            let oran = parseFloat(oranInput.value);
-            if(oran >= 0) { oran = oran > 100 ? 100 : oran; let yeniPesinat = Math.round((liste * oran) / 100); pesinatInput.value = yeniPesinat.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+        if(!liste || oranStr === "") return;
+        let oran = parseFloat(oranStr);
+        if(oran >= 0) {
+            oran = oran > 100 ? 100 : oran;
+            let yeniPesinat = Math.round((liste * oran) / 100);
+            pesinatInput.value = yeniPesinat.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
-        ehUpdateBakiye();
     }
 
     function ehCalcTapu() {
@@ -337,11 +304,14 @@
         let oKdv = (parseFloat(document.getElementById('eh_t_kdv_fix').value)||20)/100;
         let aliciOderHepsi = document.getElementById('eh_t_alici_all').checked;
         let kdvAktif = document.getElementById('eh_t_kdv_on').checked;
+
         let aHarc = bedel * (oHarcTotal/2), sHarc = bedel * (oHarcTotal/2);
         let aKom = bedel * oKom, sKom = bedel * oKom;
         let aKdv = kdvAktif ? aKom * oKdv : 0, sKdv = kdvAktif ? sKom * oKdv : 0;
+
         if(aliciOderHepsi) { aHarc = bedel * oHarcTotal; sHarc = 0; }
         let aTot = aHarc + aKom + aKdv, sTot = sHarc + sKom + sKdv;
+
         const ui = (t, c, h, k, kv, tot) => `<h5 style="margin:0 0 12px 0; color:${c}; letter-spacing:1px; border-bottom:2px solid ${c}; padding-bottom:5px;">${t} MALİYET ÖZETİ</h5><div class="eh-res-row"><span>Harç:</span><strong>${ehFormatter.format(h)}</strong></div><div class="eh-res-row"><span>Hizmet Bedeli:</span><strong>${ehFormatter.format(k)}</strong></div>${kdvAktif?`<div class="eh-res-row"><span>KDV (%${oKdv*100}):</span><strong>${ehFormatter.format(kv)}</strong></div>`:''}<div class="eh-res-row" style="border-top:2px solid #eee; padding-top:10px; margin-top:10px;"><span>ÖDENECEK TOPLAM:</span><strong style="color:${c}; font-size:1.2rem;">${ehFormatter.format(tot)}</strong></div>`;
         document.getElementById('eh_res_alici').innerHTML = ui('ALICI', 'var(--accent)', aHarc, aKom, aKdv, aTot);
         document.getElementById('eh_res_satici').innerHTML = ui('SATICI', 'var(--primary)', sHarc, sKom, sKdv, sTot);
@@ -349,7 +319,7 @@
     }
 
     function ehCalcKarar() {
-        const lp = ehGetNum('eh_k_liste'), pt = ehGetNum('eh_k_pesinat'), bm = parseFloat(document.getElementById('eh_k_mevduat').value), ind = parseFloat(document.getElementById('eh_k_indirim').value)||0, isS = document.getElementById('eh_radio_sabit').checked;
+        const lp = ehGetNum('eh_k_liste'), pt = ehGetNum('eh_k_pesinat'), bm = parseFloat(document.getElementById('eh_k_mevduat').value), ind = parseFloat(document.getElementById('eh_k_indirim').value)||0, isS = document.querySelector('input[name="eh_plan_tipi"]:checked').value === 'sabit';
         if(!lp || isNaN(bm)) return;
         let v = isS ? (parseInt(document.getElementById('eh_k_vade').value)||1) : 0;
         if(!isS) document.querySelectorAll('.eh-inst-row').forEach(r => v += parseInt(r.querySelector('.eh-esnek-ay').value)||0);
@@ -357,6 +327,7 @@
         const nr = (bm * (1 - (st/100))) / 1200;
         const pf = lp * (1 - (ind/100));
         let npv = pt, kasa_nom = pf - pt, totFz = 0, totalTaksit = 0;
+        
         if(isS){
             let vf = parseFloat(document.getElementById('eh_k_vadeFarki').value)||0, r = vf/100;
             let t = r === 0 ? (lp-pt)/v : (lp-pt)*(r*Math.pow(1+r,v))/(Math.pow(1+r,v)-1);
@@ -366,22 +337,34 @@
             for(let i=0;i<flows.length;i++) { npv += flows[i]/Math.pow(1+nr,i+1); let fz = kasa_nom * nr; totFz += fz; kasa_nom = kasa_nom + fz - flows[i]; totalTaksit += flows[i]; }
             let o = pt + flows.reduce((a,b)=>a+b,0); if(o < lp) { let bal = (lp-o); npv += bal/Math.pow(1+nr, flows.length+1); let fz = kasa_nom * nr; totFz += fz; kasa_nom = kasa_nom + fz - bal; totalTaksit += bal; }
         }
+        
         let ekstraMaliyet = (pt + totalTaksit) - pf;
         let vadeFarkiMaliyeti = totalTaksit - (lp - pt);
         const isPesinIyi = kasa_nom < 0;
         const finalAdv = Math.abs(kasa_nom);
         const npvKar = Math.abs(pf - npv); 
+        
         let kayipMetni = vadeFarkiMaliyeti > 0 ? "{Vazgeçilen İndirim ve Vade Farkı}" : "{Vazgeçilen Peşin İndirimi}";
         const formulaText = isPesinIyi ? `${kayipMetni} - {Net Faiz Kazancı}` : `{Net Faiz Kazancı} - ${kayipMetni}`;
         const val1 = isPesinIyi ? ekstraMaliyet : totFz;
         const val2 = isPesinIyi ? totFz : ekstraMaliyet;
+        
         document.getElementById('eh_r_kasa_avantaj').innerText = ehFormatter.format(finalAdv);
         document.getElementById('eh_r_kasa_avantaj').style.color = isPesinIyi ? 'var(--red)' : 'var(--green)';
         document.getElementById('eh_r_npv').innerText = ehFormatter.format(npvKar);
-        document.getElementById('eh_r_ispat_kutu').innerHTML = `<strong style="color:var(--gray); font-size:0.75rem; text-transform:uppercase;">Hesap Sağlaması (İspat):</strong><br><span style="font-size:0.8rem; color:#718096; display:inline-block; margin:5px 0;">${formulaText}</span><br><span style="font-size:1.1rem; font-weight:900; color:var(--primary);">${ehFormatter.format(val1)} - ${ehFormatter.format(val2)} = <span style="color:${isPesinIyi?'var(--red)':'var(--green)'};">${ehFormatter.format(finalAdv)}</span></span>`;
+        
+        document.getElementById('eh_r_ispat_kutu').innerHTML = `
+            <strong style="color:var(--gray); font-size:0.75rem; text-transform:uppercase;">Hesap Sağlaması (İspat):</strong><br>
+            <span style="font-size:0.8rem; color:#718096; display:inline-block; margin:5px 0;">${formulaText}</span><br>
+            <span style="font-size:1.1rem; font-weight:900; color:var(--primary);">
+                ${ehFormatter.format(val1)} - ${ehFormatter.format(val2)} = <span style="color:${isPesinIyi?'var(--red)':'var(--green)'};">${ehFormatter.format(finalAdv)}</span>
+            </span>
+        `;
+        
         const verdB = document.getElementById('eh_r_kararKutusu');
         verdB.style.backgroundColor = isPesinIyi ? 'var(--red)' : 'var(--green)';
         verdB.innerText = isPesinIyi ? "TAVSİYE: PEŞİN ALIM DAHA KAZANÇLI" : "TAVSİYE: VADELİ ALIM DAHA KAZANÇLI";
+        
         document.getElementById('eh_resKarar').style.display = 'block';
     }
 
@@ -393,7 +376,7 @@
     }
 
     function ehShowReport() {
-        const isS = document.getElementById('eh_radio_sabit').checked;
+        const isS = document.querySelector('input[name="eh_plan_tipi"]:checked').value === 'sabit';
         const lp = ehGetNum('eh_k_liste'), pt = ehGetNum('eh_k_pesinat'), bm = parseFloat(document.getElementById('eh_k_mevduat').value), ind = parseFloat(document.getElementById('eh_k_indirim').value)||0, vf = parseFloat(document.getElementById('eh_k_vadeFarki').value)||0;
         let v = isS ? (parseInt(document.getElementById('eh_k_vade').value)||1) : 0;
         if(!isS) document.querySelectorAll('.eh-inst-row').forEach(r => v += parseInt(r.querySelector('.eh-esnek-ay').value)||0);
@@ -401,6 +384,7 @@
         const nr = (bm * (1 - (st/100))) / 1200;
         const pf = lp * (1 - (ind/100));
         let kasa = pf - pt, cf = [], pm = [], totFz = 0, totalTaksit = 0;
+        
         if(isS){
             let r = vf/100, t = r === 0 ? (lp-pt)/v : (lp-pt)*(r*Math.pow(1+r,v))/(Math.pow(1+r,v)-1);
             for(let i=1;i<=v;i++) pm[i] = t;
@@ -410,14 +394,17 @@
             let b = (pt + flows.reduce((a,b)=>a+b,0) < lp) ? (lp - (pt + flows.reduce((a,b)=>a+b,0))) : 0; if(b>0) { pm[flows.length+1] = b; v = flows.length+1; }
         }
         for(let m=1; m<=v; m++){ let fz = kasa * nr; totFz += fz; let tks = pm[m]||0; totalTaksit += tks; let son = kasa + fz - tks; cf.push({ m, bas: kasa, fz, tks, son }); kasa = son; }
+        
         let ekstraMaliyet = (pt + totalTaksit) - pf;
         let vadeFarkiMaliyeti = totalTaksit - (lp - pt);
         let isPesinIyi = kasa < 0;
         let finalAdv = Math.abs(kasa);
+        
         let kayipMetni = vadeFarkiMaliyeti > 0 ? "{Vazgeçilen İndirim ve Vade Farkı}" : "{Vazgeçilen Peşin İndirimi}";
         const formulaText = isPesinIyi ? `${kayipMetni} - {Net Faiz Kazancı}` : `{Net Faiz Kazancı} - ${kayipMetni}`;
         const val1 = isPesinIyi ? ekstraMaliyet : totFz;
         const val2 = isPesinIyi ? totFz : ekstraMaliyet;
+        
         const area = document.getElementById('print-area');
         area.innerHTML = `
             <div style="padding:40px; background:#fff; font-family:Arial, sans-serif;">
@@ -425,22 +412,66 @@
                     <h1 style="margin:0; color:#1a252f; font-size:28px;">GAYRİMENKUL YATIRIM STRATEJİ RAPORU</h1>
                     <p style="color:#e67e22; font-weight:bold; letter-spacing:1px; margin-top:5px;">Profesyonel Finansal Analiz ve Karar Destek Belgesi</p>
                 </div>
+
                 <div style="display:flex; justify-content:space-between; margin-bottom:30px; font-size:13px; background:#f8fafc; padding:20px; border-radius:10px; border:1px solid #e2e8f0;">
-                    <div><h4 style="margin:0 0 10px 0; color:#3182ce;">1. YATIRIM GİRDİLERİ</h4>Liste Fiyatı: <strong>${ehFormatter.format(lp)}</strong><br>İndirimli Peşin Fiyat: <strong>${ehFormatter.format(pf)}</strong><br>Ödenen Peşinat: <strong>${ehFormatter.format(pt)}</strong><br>Vadeli Planın Toplam Kaybı: <strong style="color:red;">${ehFormatter.format(ekstraMaliyet)}</strong><div style="font-size:10px; color:#718096; margin-top:3px;">*(Vazgeçilen İndirim: ${ehFormatter.format(lp - pf)}${vadeFarkiMaliyeti > 0 ? ' + Ödenen Vade Farkı: ' + ehFormatter.format(vadeFarkiMaliyeti) : ''})*</div></div>
-                    <div style="text-align:right;"><h4 style="margin:0 0 10px 0; color:#3182ce;">2. FİNANSAL PARAMETRELER</h4>Vade: <strong>${v} Ay</strong> | Aylık Vade Farkı: <strong>%${vf}</strong><br>Yıllık Brüt Mevduat: <strong>%${bm}</strong><br>Net Mevduat Getirisi: <strong>%${(bm*(1-st/100)).toFixed(2)}</strong><br>Toplam Net Faiz Kazancı: <strong style="color:green;">+${ehFormatter.format(totFz)}</strong></div>
+                    <div>
+                        <h4 style="margin:0 0 10px 0; color:#3182ce;">1. YATIRIM GİRDİLERİ</h4>
+                        Liste Fiyatı: <strong>${ehFormatter.format(lp)}</strong><br>
+                        İndirimli Peşin Fiyat: <strong>${ehFormatter.format(pf)}</strong><br>
+                        Ödenen Peşinat: <strong>${ehFormatter.format(pt)}</strong><br>
+                        Vadeli Planın Toplam Kaybı: <strong style="color:red;">${ehFormatter.format(ekstraMaliyet)}</strong>
+                        <div style="font-size:10px; color:#718096; margin-top:3px;">*(Vazgeçilen İndirim: ${ehFormatter.format(lp - pf)}${vadeFarkiMaliyeti > 0 ? ' + Ödenen Vade Farkı: ' + ehFormatter.format(vadeFarkiMaliyeti) : ''})*</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <h4 style="margin:0 0 10px 0; color:#3182ce;">2. FİNANSAL PARAMETRELER</h4>
+                        Vade: <strong>${v} Ay</strong> | Aylık Vade Farkı: <strong>%${vf}</strong><br>
+                        Yıllık Brüt Mevduat: <strong>%${bm}</strong><br>
+                        Net Mevduat Getirisi: <strong>%${(bm*(1-st/100)).toFixed(2)}</strong><br>
+                        Toplam Net Faiz Kazancı: <strong style="color:green;">+${ehFormatter.format(totFz)}</strong>
+                    </div>
                 </div>
-                <div style="background:${isPesinIyi?'#fff5f5':'#f0fff4'}; border:2px solid ${isPesinIyi?'#feb2b2':'#9ae6b4'}; padding:25px; text-align:center; border-radius:15px; margin-bottom:30px;"><h2 style="margin:0; color:${isPesinIyi?'#c53030':'#2f855a'};">${isPesinIyi ? 'TAVSİYE: PEŞİN ALIM DAHA KAZANÇLI' : 'TAVSİYE: VADELİ ALIM DAHA KAZANÇLI'}</h2><div style="margin:20px 0; border-top:1px dashed #ccc; padding-top:15px;"><strong style="color:#4a5568; font-size:12px;">HESAP SAĞLAMASI (FINANSAL ISPAT):</strong><br><span style="font-size:13px; color:#718096;">${formulaText}</span><br><br><span style="font-size:20px; font-weight:900; color:${isPesinIyi?'#c53030':'#2f855a'};">${ehFormatter.format(val1)} - ${ehFormatter.format(val2)} = <strong>${ehFormatter.format(finalAdv)}</strong></span></div></div>
+
+                <div style="background:${isPesinIyi?'#fff5f5':'#f0fff4'}; border:2px solid ${isPesinIyi?'#feb2b2':'#9ae6b4'}; padding:25px; text-align:center; border-radius:15px; margin-bottom:30px;">
+                    <h2 style="margin:0; color:${isPesinIyi?'#c53030':'#2f855a'};">${isPesinIyi ? 'TAVSİYE: PEŞİN ALIM DAHA KAZANÇLI' : 'TAVSİYE: VADELİ ALIM DAHA KAZANÇLI'}</h2>
+                    <div style="margin:20px 0; border-top:1px dashed #ccc; padding-top:15px;">
+                        <strong style="color:#4a5568; font-size:12px;">HESAP SAĞLAMASI (FINANSAL ISPAT):</strong><br>
+                        <span style="font-size:13px; color:#718096;">
+                            ${formulaText}
+                        </span>
+                        <br><br>
+                        <span style="font-size:20px; font-weight:900; color:${isPesinIyi?'#c53030':'#2f855a'};">
+                            ${ehFormatter.format(val1)} - ${ehFormatter.format(val2)} = <strong>${ehFormatter.format(finalAdv)}</strong>
+                        </span>
+                    </div>
+                </div>
+
                 <h3 style="border-bottom:2px solid #1a252f; padding-bottom:8px; color:#1a252f; font-size:18px;">DETAYLI NAKİT AKIŞ VE KASA PROJEKSİYONU</h3>
-                <table style="width:100%; border-collapse:collapse; font-size:11px; margin-top:10px;"><thead><tr style="background:#1a252f; color:#fff;"><th style="padding:12px; border:1px solid #ddd; text-align:center;">Ay</th><th style="padding:12px; border:1px solid #ddd;">Dönem Başı Kasa</th><th style="padding:12px; border:1px solid #ddd;">Net Faiz (+)</th><th style="padding:12px; border:1px solid #ddd;">Taksit (-)</th><th style="padding:12px; border:1px solid #ddd;">Dönem Sonu Kasa</th></tr></thead><tbody>${cf.map((r, index) => { const isLast = index === cf.length - 1; return `<tr style="${isLast?'background:#fffaf0; font-weight:bold; border:2px solid #e67e22;':''}"> <td style="padding:10px; border:1px solid #ddd; text-align:center;">${r.m}</td> <td style="padding:10px; border:1px solid #ddd;">${ehFormatter.format(r.bas)}</td> <td style="padding:10px; border:1px solid #ddd; color:green;">+${ehFormatter.format(r.fz)}</td> <td style="padding:10px; border:1px solid #ddd; color:red;">-${ehFormatter.format(r.tks)}</td> <td style="padding:10px; border:1px solid #ddd; font-size:${isLast?'14px':'11px'}; color:${r.son < 0 ? '#c53030' : '#1a252f'}">${ehFormatter.format(r.son)}</td> </tr>`; }).join('')}</tbody></table>
-                <div style="margin-top:25px; font-size:11px; color:#718096; text-align:justify; border-top:1px solid #eee; padding-top:15px; line-height: 1.6;">*Bu analiz, peşin ödeme yerine taksitli alım yapılıp, elde kalan nakit paranın banka mevduatında değerlendirildiği senaryodaki net finansal sonucu ifade eder.<br><strong style="color:#2b6cb0;">** Not:</strong> Mevduat kazanç projeksiyonu, bankaların en yüksek getiri oranını sunduğu <strong>32 günlük standart vade yenileme döngüsü</strong> baz alınarak hesaplanmıştır.</div>
-                
-                <div style="margin-top:35px; padding:20px; border: 1px dashed #e53e3e; background: #fffaf0; border-radius:10px;">
-                    <div style="color:#c53030; font-weight:900; font-size:13px; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
-                        <i class="fa-solid fa-triangle-exclamation"></i> YASAL UYARI
-                    </div>
-                    <div style="font-size:11px; color:#4a5568; text-align:justify; line-height:1.6; font-style: italic;">
-                        Bu raporda sunulan finansal veriler, faiz getirileri ve nakit akış projeksiyonları tamamen bilgilendirme ve öngörü amaçlı bir simülasyondur. Güncel mevduat oranları, vergi kesintileri ve banka uygulamaları anlık değişiklik gösterebileceğinden, rapordaki rakamlar resmi bir taahhüt niteliği taşımaz. Kesin ve bağlayıcı sonuçlar için işlem öncesinde bankanızla rakamların netleştirilmesi gerekmektedir.
-                    </div>
+                <table style="width:100%; border-collapse:collapse; font-size:11px; margin-top:10px;">
+                    <thead>
+                        <tr style="background:#1a252f; color:#fff;">
+                            <th style="padding:12px; border:1px solid #ddd; text-align:center;">Ay</th>
+                            <th style="padding:12px; border:1px solid #ddd;">Dönem Başı Kasa</th>
+                            <th style="padding:12px; border:1px solid #ddd;">Net Faiz (+)</th>
+                            <th style="padding:12px; border:1px solid #ddd;">Taksit (-)</th>
+                            <th style="padding:12px; border:1px solid #ddd;">Dönem Sonu Kasa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${cf.map((r, index) => {
+                            const isLast = index === cf.length - 1;
+                            return `<tr style="${isLast?'background:#fffaf0; font-weight:bold; border:2px solid #e67e22;':''}">
+                                <td style="padding:10px; border:1px solid #ddd; text-align:center;">${r.m}</td>
+                                <td style="padding:10px; border:1px solid #ddd;">${ehFormatter.format(r.bas)}</td>
+                                <td style="padding:10px; border:1px solid #ddd; color:green;">+${ehFormatter.format(r.fz)}</td>
+                                <td style="padding:10px; border:1px solid #ddd; color:red;">-${ehFormatter.format(r.tks)}</td>
+                                <td style="padding:10px; border:1px solid #ddd; font-size:${isLast?'14px':'11px'}; color:${r.son < 0 ? '#c53030' : '#1a252f'}">${ehFormatter.format(r.son)}</td>
+                            </tr>`;
+                        }).join('')}
+                    </tbody>
+                </table>
+                <div style="margin-top:30px; font-size:11px; color:#718096; text-align:justify; border-top:1px solid #eee; padding-top:15px; line-height: 1.6;">
+                    *Bu analiz, peşin ödeme yerine taksitli alım yapılıp, elde kalan nakit paranın banka mevduatında değerlendirildiği senaryodaki net finansal sonucu ifade eder.<br>
+                    <strong style="color:#2b6cb0;">** Not:</strong> Mevduat kazanç projeksiyonu, bankaların en yüksek getiri oranını sunduğu <strong>32 günlük standart vade yenileme döngüsü</strong> baz alınarak hesaplanmış ve tavsiye edilmiştir.
                 </div>
             </div>`;
         window.print();
