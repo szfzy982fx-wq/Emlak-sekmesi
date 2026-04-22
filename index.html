@@ -39,16 +39,16 @@
         .eh-form-group input { width: 100%; padding: 12px; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 1.1rem; font-family: monospace; font-weight: 700; box-sizing: border-box; transition: 0.2s; }
         .eh-form-group input:focus { border-color: var(--accent); outline: none; background: #fff; }
 
-        /* Akıllı Peşinat Kutusu CSS Entegrasyonu */
+        /* Akıllı Peşinat Kutusu CSS Entegrasyonu (Genişletildi) */
         .eh-input-wrapper { position: relative; display: flex; align-items: center; }
-        .eh-input-wrapper > input { padding-right: 80px; }
-        .eh-perc-box { position: absolute; right: 6px; background: #edf2f7; border: 2px solid #e2e8f0; border-radius: 6px; display: flex; align-items: center; padding: 2px 6px; width: 70px; height: calc(100% - 12px); box-sizing: border-box; transition: 0.2s; }
+        .eh-input-wrapper > input { padding-right: 100px; } /* Kutu büyümesine karşı rakamı korumak için 100px'e çıkarıldı */
+        .eh-perc-box { position: absolute; right: 6px; background: #edf2f7; border: 2px solid #e2e8f0; border-radius: 6px; display: flex; align-items: center; padding: 2px 6px; width: 90px; /* Ok simgesi ve rakam için 70px'ten 90px'e çıkarıldı */ height: calc(100% - 12px); box-sizing: border-box; transition: 0.2s; }
         .eh-perc-box:focus-within { border-color: var(--accent); background: #fff; }
         .eh-perc-box span { font-weight: 900; color: var(--gray); font-size: 0.9rem; margin-right: 3px; }
         .eh-perc-box input { border: none !important; background: transparent !important; padding: 0 !important; font-size: 1rem !important; font-weight: 800 !important; color: var(--primary) !important; width: 100% !important; text-align: center; }
         .eh-perc-box input:focus { outline: none !important; box-shadow: none !important; }
-        .eh-perc-box input[type="number"]::-webkit-inner-spin-button, .eh-perc-box input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-        .eh-perc-box input[type="number"] { -moz-appearance: textfield; }
+        /* Firefox için okları gizle (Opsiyonel ama temiz görünüm sağlar) */
+        .eh-perc-box input[type="number"]::-webkit-inner-spin-button, .eh-perc-box input[type="number"]::-webkit-outer-spin-button { opacity: 1; }
 
         .eh-toggle-row { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; font-weight: 700; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 10px; cursor: pointer; transition: 0.2s; }
         .eh-toggle-row:hover { background: #edf2f7; }
@@ -158,7 +158,7 @@
                             <input type="text" id="eh_k_pesinat" oninput="ehFormatCur(this); ehUpdatePerc()" placeholder="5.602.500">
                             <div class="eh-perc-box" title="Hızlı Yüzde Hesaplama">
                                 <span>%</span>
-                                <input type="number" id="eh_k_pesinat_oran" list="eh_oranlar" oninput="ehUpdatePesinat()" placeholder="50">
+                                <input type="number" id="eh_k_pesinat_oran" list="eh_oranlar" oninput="ehUpdatePesinat()" placeholder="0">
                                 <datalist id="eh_oranlar">
                                     <option value="10"></option><option value="20"></option><option value="25"></option>
                                     <option value="30"></option><option value="40"></option><option value="50"></option>
@@ -270,26 +270,39 @@
         if(tabId === 'tab-karar') { document.getElementById('eh_esnek_container').innerHTML = ""; document.getElementById('eh_k_pesinat_oran').value = ""; }
     }
 
-    // Akıllı Peşinat Fonksiyonları
+    // Akıllı Peşinat Fonksiyonları (Hata ve boş kutu yönetimi ile)
     function ehUpdatePerc() {
         let liste = ehGetNum('eh_k_liste');
-        let pesinat = ehGetNum('eh_k_pesinat');
+        let pInput = document.getElementById('eh_k_pesinat');
         let oranInput = document.getElementById('eh_k_pesinat_oran');
         if(!liste) return; 
+        
+        // Eğer peşinat kutusunu tamamen silerseniz, oran kutusu da boşalır
+        if(pInput.value === "") { 
+            oranInput.value = ""; 
+            return; 
+        }
+        
+        let pesinat = ehGetNum('eh_k_pesinat');
         if(pesinat >= 0) {
             let oran = (pesinat / liste) * 100;
             oranInput.value = oran > 100 ? 100 : (Number.isInteger(oran) ? oran : oran.toFixed(1));
-        } else {
-            oranInput.value = "";
         }
     }
 
     function ehUpdatePesinat() {
         let liste = ehGetNum('eh_k_liste');
-        let oranStr = document.getElementById('eh_k_pesinat_oran').value;
+        let oranInput = document.getElementById('eh_k_pesinat_oran');
         let pesinatInput = document.getElementById('eh_k_pesinat');
-        if(!liste || oranStr === "") return;
-        let oran = parseFloat(oranStr);
+        if(!liste) return;
+        
+        // Eğer oran kutusunu tamamen silerseniz, peşinat kutusu da boşalır
+        if(oranInput.value === "") { 
+            pesinatInput.value = ""; 
+            return; 
+        }
+        
+        let oran = parseFloat(oranInput.value);
         if(oran >= 0) {
             oran = oran > 100 ? 100 : oran;
             let yeniPesinat = Math.round((liste * oran) / 100);
